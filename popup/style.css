@@ -1,0 +1,144 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;1,400&display=swap');
+
+:root {
+    --green: #00974c;
+}
+
+html,
+body {
+    font-family: 'Rubik', sans-serif;
+    width: 300px;
+    height: 300px;
+    display: grid;
+    grid-template-rows: 1fr 3fr 1fr;
+    align-items: center;
+    justify-items: center;
+    margin: 0;
+    padding: 5px;
+    position: relative;
+}
+
+button {
+    cursor: pointer;
+    font-size: inherit;
+}
+
+span {
+    color: var(--green);
+}
+
+button:disabled {
+    color: gray;
+    cursor: not-allowed;
+    border-color: gray;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 10px;
+}
+
+#content {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    justify-self: flex-start;
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+}
+
+.panel {
+    flex: 0 0 300px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    scroll-snap-align: center;
+    text-align: center;
+}
+
+#buttonContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 70%;
+    grid-gap: 5px;
+}
+
+.primary_btn {
+    border: 2px solid var(--green);
+    border-radius: 8px;
+    color: var(--green);
+    padding: 5px 10px;
+    background: none;
+    transition: all .3s;
+}
+
+.primary_btn:hover {
+    box-shadow: 0px 2px 4px 0px #7F646464
+}
+
+.secondary_btn {
+    text-decoration: underline;
+    background: none;
+    border: none;
+}
+
+#pauseExtensionBtn {
+    width: 200%;
+}
+
+.breathingIndicatorBar {
+    background-color: var(--green);
+    height: 10px;
+    margin: 5px 0 15px 0;
+    width: 50px;
+    border-radius: 8px;
+    animation: breathingCycle 9s 3 linear;
+    animation-play-state: paused;
+}
+
+@keyframes breathingCycle {
+    0% {
+        width: 50px;
+    }
+
+    33% {
+        width: 150px;
+    }
+
+    100% {
+        width: 50px;
+    }
+}
+
+.pauseExtensionPanel {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    z-index: -2;
+    position: absolute;
+    background-color: #fff;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all .3s;
+}
+
+.showPauseExtensionPanel {
+    z-index: 2;
+    opacity: 1;
+}
+
+#minimizePauseExtensionPanel {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css"/>
+</head>
+  <body>
+    <h3 id="heading">👋 Need a break?</h3>
+    <div id="content">
+      <div class="panel" id="eyeClose">
+        <p>Close your eyes for the duration of a deep breath</p>
+      </div>
+      <div class="panel" id="eyeDistance">
+        <p>Look into the distance for 20 seconds and follow an object with your eyes if you can</p>
+        <button class="primary_btn" id="lookDistanceTimerBtn">Start</button>
+      </div>
+      <div class="panel" id="breathingCycle">
+        <p>Up for a 1:2 (inhale:exhale) breathing cycle?</p>
+        <div class="breathingIndicatorBar"></div>
+        <button class="primary_btn" id="breathingCycleBtn">Start</button>
+      </div>
+      <div class="panel" id="wirstShake">
+        <p>Shake your wrists for a few seconds</p>
+      </div>
+      <div class="panel" id="wirstShake">
+        <p>Thank you for taking time for your health</p>
+      </div>
+    </div>
+    <div class="pauseExtensionPanel">
+      <button class="secondary_btn" onclick="minimizePauseExtensionPanel(false)" id="minimizePauseExtensionPanel">_</button>
+      <h3>Pause <span>Health</span> break</h3>
+      For 
+      <form id="pauseExtensionForm">
+        <label>60 min</label>
+        <input type="radio" name="pauseExtension" value="60">
+        <label>90 min</label>
+        <input type="radio" name="pauseExtension" value="90">
+        <label>whole day</label>
+        <input type="radio" name="pauseExtension" value="wholeDay">
+      </form>
+      <button class="secondary_btn" onclick="pauseExtension()">set</button>
+    </div>
+    <div id="buttonContainer">
+      <button class="secondary_btn" onclick="closeWindow()" id="cancelBtn">I'm good for now</button>
+      <button class="primary_btn" id="nextBtn">Next</button>
+      <button class="secondary_btn" onclick="minimizePauseExtensionPanel(true)" id="pauseExtensionBtn">Pause this</button>
+    </div>
+    <script src="logic.js"></script><!-- because inline js is not allowed-->
+  </body>
+</html>
