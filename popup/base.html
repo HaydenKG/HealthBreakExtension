@@ -8,6 +8,9 @@
 </head>
   <body>
     <h3 id="heading">👋 Need a break?</h3>
+    <div id="hiddenPausePanel">
+      <img id="pauseExtensionBtn" onclick="showPauseExtensionPanel(true)" src="../images/pauseIcon.png"\>
+    </div>
     <div id="content">
       <div class="panel" id="eyeClose">
         <p>Close your eyes for the duration of a deep breath</p>
@@ -29,7 +32,7 @@
       </div>
     </div>
     <div class="pauseExtensionPanel">
-      <button class="secondary_btn" onclick="minimizePauseExtensionPanel(false)" id="minimizePauseExtensionPanel">_</button>
+      <button class="secondary_btn" onclick="showPauseExtensionPanel(false)" id="minimizePauseExtensionPanel">_</button>
       <h3>Pause <span>Health</span> break</h3>
       For 
       <form id="pauseExtensionForm">
@@ -45,7 +48,6 @@
     <div id="buttonContainer">
       <button class="secondary_btn" onclick="closeWindow()" id="cancelBtn">I'm good for now</button>
       <button class="primary_btn" id="nextBtn">Next</button>
-      <button class="secondary_btn" onclick="minimizePauseExtensionPanel(true)" id="pauseExtensionBtn">Pause this</button>
     </div>
     <script src="logic.js"></script><!-- because inline js is not allowed-->
   </body>

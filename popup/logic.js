@@ -11,6 +11,8 @@ let headingChanged = false;
 let breathingCycleOn = false;
 let breathingCounter = 0;
 let breathingTimer;
+let paused = false;
+let currentAudio;
 
 const contentContainer = document.getElementById("content");
 const options = new Map();
@@ -42,23 +44,39 @@ document.getElementById("lookDistanceTimerBtn").addEventListener("click", functi
     setTimeout(() => {
         this.previousElementSibling.innerText += "\n\n Perfect 😊";
         this.style.display = "none";
+        new Audio("./sounds/ShadowSoft.wav").play();
     }, 2000);
     this.setAttribute('disabled', '');
 });
 
+
+//replace with stop because it causes too much trouble syncing the css animation with the sound again
 document.getElementById("breathingCycleBtn").addEventListener("click", function(){
     breathingCycleOn = !breathingCycleOn;
     if(breathingCycleOn){
         breathingTimer = setInterval(() => {
+            if(paused) return;
+            
             breathingCounter++;
-            if(breathingCounter >= 9*3)
+            if(breathingCounter == 1 || breathingCounter == 9 || breathingCounter == 18){
+                currentAudio = new Audio("./sounds/InhaleLofiPiano.wav");
+                currentAudio.play();
+            }
+            if(breathingCounter == 3 || breathingCounter == 12 || breathingCounter == 21){
+                currentAudio = new Audio("./sounds/ExhaleLofiPiano.wav")
+                currentAudio.play();
+            }
+            if(breathingCounter >= 9 * 5)
                 resetBreathing(this);
         }, 1000);
         this.innerText = "Pause"; // replace with icons 
         breahtingIndicator.style.animationPlayState = "running";
+        paused = false;
     } else {
         this.innerText = "Go";
         breahtingIndicator.style.animationPlayState = "paused";
+        paused = true;
+        currentAudio.pause();
     }
 });
 
@@ -88,7 +106,7 @@ function changeHeading() {
     headingChanged = true;
 }
 
-function minimizePauseExtensionPanel(show){
+function showPauseExtensionPanel(show){
     if(show){
         pauseExtensionPanel.classList.add("showPauseExtensionPanel");
     }

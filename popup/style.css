@@ -78,6 +78,7 @@ form {
     padding: 5px 10px;
     background: none;
     transition: all .3s;
+    font-size: 1.2rem;
 }
 
 .primary_btn:hover {
@@ -90,17 +91,13 @@ form {
     border: none;
 }
 
-#pauseExtensionBtn {
-    width: 200%;
-}
-
 .breathingIndicatorBar {
     background-color: var(--green);
     height: 10px;
     margin: 5px 0 15px 0;
     width: 50px;
     border-radius: 8px;
-    animation: breathingCycle 9s 3 linear;
+    animation: breathingCycle 9s 5 linear;
     animation-play-state: paused;
 }
 
@@ -132,9 +129,34 @@ form {
     transition: all .3s;
 }
 
+#hiddenPausePanel {
+    height: 60px;
+    width: 50px;
+    background-color: coral;
+    transform: translateY(-50px);
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: grid;
+    transition: transform .2s;
+    border-radius: 8px;
+}
+
+#hiddenPausePanel:hover{
+    transform: translateY(-10px);
+}
+
 .showPauseExtensionPanel {
     z-index: 2;
     opacity: 1;
+}
+
+#pauseExtensionBtn {
+    justify-self: center;
+    align-self: center;
+    width: 30px;
+    height: auto;
+    cursor: pointer;
 }
 
 #minimizePauseExtensionPanel {
