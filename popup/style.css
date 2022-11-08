@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300;0,400;1,400&display=swap');
 
 :root {
-    --green: #00974c;
+    --primColor: #1BB509;
+    --secondColor: #B57700;
 }
 
 html,
@@ -9,22 +10,26 @@ body {
     font-family: 'Rubik', sans-serif;
     width: 300px;
     height: 300px;
+    margin: 0;
+    text-align: center;
+    position: relative;
+}
+
+main {
     display: grid;
     grid-template-rows: 1fr 3fr 1fr;
     align-items: center;
     justify-items: center;
-    margin: 0;
-    padding: 5px;
     position: relative;
+}
+
+span {
+    color: var(--primColor);
 }
 
 button {
     cursor: pointer;
     font-size: inherit;
-}
-
-span {
-    color: var(--green);
 }
 
 button:disabled {
@@ -43,17 +48,62 @@ form {
     margin-bottom: 10px;
 }
 
-#content {
+input {
+    cursor: pointer;
+}
+
+#hiddenSettingsPanel {
+    height: 80px;
+    width: 50px;
+    background-color: var(--secondColor);
+    transform: translateY(-86px);
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: grid;
+    padding: 10px 0;
+    transition: transform .2s;
+    border-radius: 8px;
+}
+
+#hiddenSettingsPanel:hover{
+    transform: translateY(-10px);
+}
+
+#arrowDown {
+    rotate: -45deg;
+    color: #fff;
+    position: absolute;
+    bottom: -7px;
+    left: 35%;
+    display: block;
+}
+
+#hiddenSettingsPanel:hover #arrowDown {
+    filter: opacity(0);
+    display: none;
+    color: #B57700;
+}
+
+.settingsBtn {
+    justify-self: center;
+    align-self: center;
+    width: 30px;
+    height: auto;
+    cursor: pointer;
+}
+
+.slidingContainer {
     display: flex;
     width: 100%;
     justify-content: flex-start;
     justify-self: flex-start;
     scroll-snap-type: x mandatory;
-    overflow-x: auto;
+    overflow-x: hidden;
     scroll-behavior: smooth;
 }
 
-.panel {
+.exercisePanel {
     flex: 0 0 300px;
     width: 300px;
     display: flex;
@@ -61,7 +111,10 @@ form {
     align-items: center;
     justify-content: center;
     scroll-snap-align: center;
-    text-align: center;
+}
+
+.exercisePanel > p {
+    padding: 0 2px;
 }
 
 #buttonContainer {
@@ -72,9 +125,9 @@ form {
 }
 
 .primary_btn {
-    border: 2px solid var(--green);
+    border: 2px solid var(--primColor);
     border-radius: 8px;
-    color: var(--green);
+    color: var(--primColor);
     padding: 5px 10px;
     background: none;
     transition: all .3s;
@@ -91,8 +144,16 @@ form {
     border: none;
 }
 
+.secondary_btn:hover {
+    text-decoration-color: var(--primColor);
+}
+
+.secondary_btn + .secondary_btn {
+    margin: 5px;
+}
+
 .breathingIndicatorBar {
-    background-color: var(--green);
+    background-color: var(--primColor);
     height: 10px;
     margin: 5px 0 15px 0;
     width: 50px;
@@ -115,52 +176,32 @@ form {
     }
 }
 
-.pauseExtensionPanel {
+.hiddenPanel {
+    transition: all .5s;
+    display: flex;
+    position: absolute;
     width: 100%;
     height: 100%;
-    display: flex;
+    top: 0;
     z-index: -2;
-    position: absolute;
     background-color: #fff;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     opacity: 0;
+    visibility: hidden;
+}
+
+.showPanel {
+    z-index: 2;
+    opacity: 1;
+    visibility: visible;
     transition: all .3s;
 }
 
-#hiddenPausePanel {
-    height: 60px;
-    width: 50px;
-    background-color: coral;
-    transform: translateY(-50px);
-    position: absolute;
-    right: 0;
-    top: 0;
-    display: grid;
-    transition: transform .2s;
-    border-radius: 8px;
-}
-
-#hiddenPausePanel:hover{
-    transform: translateY(-10px);
-}
-
-.showPauseExtensionPanel {
-    z-index: 2;
-    opacity: 1;
-}
-
-#pauseExtensionBtn {
-    justify-self: center;
-    align-self: center;
-    width: 30px;
-    height: auto;
-    cursor: pointer;
-}
-
-#minimizePauseExtensionPanel {
+#minimizePauseExtensionPanelBtn {
     position: absolute;
     right: 10px;
     top: 10px;
+    font-size: 1.4rem;
 }

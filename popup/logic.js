@@ -4,8 +4,6 @@
 
 "use strict";
 
-//get list of selected exercises
-// and disable the ones we don't use
 let nextCounter = 0;
 let headingChanged = false;
 let breathingCycleOn = false;
@@ -14,20 +12,35 @@ let breathingTimer;
 let paused = false;
 let currentAudio;
 
-const contentContainer = document.getElementById("content");
+const contentContainer = document.getElementsByClassName("slidingContainer")[0];
 const options = new Map();
 options.set("eyeClose", document.getElementById("eyeClose"));
 options.set("eyeDistance", document.getElementById("eyeDistance"));
 options.set("breathingCycle", document.getElementById("breathingCycle"));
-options.set("wirstShake", document.getElementById("wirstShake"));
+options.set("wirstShake", document.getElementById("wristShake"));
 let optionsCount = options.size;
-
-//options.get("eyeDistance").style.display = "none";
 
 const nextButton = document.getElementById("nextBtn");
 const closeBtn = document.getElementById("cancelBtn");
 const breahtingIndicator = document.getElementsByClassName("breathingIndicatorBar")[0];
-const pauseExtensionPanel = document.getElementsByClassName("pauseExtensionPanel")[0];
+const pauseExtensionPanel = document.getElementById("pauseExtensionPanel");
+
+//TODO: READ localStorage
+let exerciseSelectionTest = [{eyeClose: true}, {eyeDistance: true}, {breathingCycle: true}, {wristShake: true}];
+let exerciseSelection = JSON.parse(localStorage.getItem("exerciseSelection"));
+
+if(exerciseSelection == null){
+    showSetupPanel(true);
+} 
+else {
+    showSetupPanel(false);
+    for(let i = 0; i < exerciseSelectionTest.length; i++){
+        if(Object.values(exerciseSelectionTest[i])[0] == false){
+            options.get(Object.keys(exerciseSelectionTest[i])[0]).style.display = "none";
+            optionsCount--;
+        }
+    }
+}
 
 nextButton.addEventListener("click", () => {
     if(nextCounter < optionsCount) nextCounter++;
@@ -49,8 +62,6 @@ document.getElementById("lookDistanceTimerBtn").addEventListener("click", functi
     this.setAttribute('disabled', '');
 });
 
-
-//replace with stop because it causes too much trouble syncing the css animation with the sound again
 document.getElementById("breathingCycleBtn").addEventListener("click", function(){
     breathingCycleOn = !breathingCycleOn;
     if(breathingCycleOn){
@@ -69,14 +80,17 @@ document.getElementById("breathingCycleBtn").addEventListener("click", function(
             if(breathingCounter >= 9 * 5)
                 resetBreathing(this);
         }, 1000);
-        this.innerText = "Pause"; // replace with icons 
+
+        //TODO: replace with stop for now because it causes too much trouble syncing the css animation with the sound after a pause
+        //Use houdini animation worklet
+        this.innerText = "Pause"; // TODO: replace with icons 
         breahtingIndicator.style.animationPlayState = "running";
         paused = false;
     } else {
         this.innerText = "Go";
         breahtingIndicator.style.animationPlayState = "paused";
-        paused = true;
         currentAudio.pause();
+        paused = true;
     }
 });
 
@@ -87,7 +101,7 @@ function pauseExtension(){
             console.log("60 min");
             break;
         case "90": 
-            console.log("90 min");
+            console.log("120 min");
             break;
         default: console.log("whole day");
     }
@@ -98,7 +112,7 @@ function resetBreathing(button){
     button.innerText = "again";
     clearInterval(breathingTimer);
     breathingCounter = 0;
-    //figure out how to repeat the cycle. Remove animation and add it again?
+    //TODO: figure out how to repeat the cycle. Remove animation and add it again?
 }
 
 function changeHeading() {
@@ -108,10 +122,10 @@ function changeHeading() {
 
 function showPauseExtensionPanel(show){
     if(show){
-        pauseExtensionPanel.classList.add("showPauseExtensionPanel");
+        pauseExtensionPanel.classList.add("showPanel");
     }
     else {
-        pauseExtensionPanel.classList.remove("showPauseExtensionPanel");
+        pauseExtensionPanel.classList.remove("showPanel");
     } 
 }
 
@@ -119,9 +133,12 @@ function closeWindow(){
     nextCounter = 0;
     headingChanged = false;
     window.close();
+    //TODO: check which API call to use to close the popup again 
+    //maybe the following? : chrome.tabs.update({ active: true }); 
 }
 
-window.addEventListener("close", () => { //check if really needed. Maybe it's loading a whole new instance on opening the extension again
+//TODO: check if really needed. Maybe it's loading a whole new instance on opening the extension again
+window.addEventListener("close", () => { 
     nextCounter = 0;
     headingChanged = false;
 });
