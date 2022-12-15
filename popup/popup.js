@@ -20,38 +20,53 @@ options.set("breathingCycle", document.getElementById("breathingCycle"));
 options.set("wirstShake", document.getElementById("wristShake"));
 let optionsCount = options.size;
 
-const nextButton = document.getElementById("nextBtn");
+const nextBtn = document.getElementById("nextBtn");
 const closeBtn = document.getElementById("cancelBtn");
+const settingsBtn = document.getElementById("settingsIcon");
+const pauseBtn = document.getElementById("pauseExtensionIcon");
+const minimizePausePanelBtn = document.getElementById("minimizePauseExtensionPanelBtn");
+const setPauseExtBtn = document.getElementById("setPauseExtBtn");
+
+
 const breahtingIndicator = document.getElementsByClassName("breathingIndicatorBar")[0];
 const pauseExtensionPanel = document.getElementById("pauseExtensionPanel");
 
-//TODO: READ localStorage
-let exerciseSelectionTest = [{eyeClose: true}, {eyeDistance: true}, {breathingCycle: true}, {wristShake: true}];
-let exerciseSelection = JSON.parse(localStorage.getItem("exerciseSelection"));
+// let exerciseSelectionTest = [{eyeClose: true}, {eyeDistance: true}, {breathingCycle: true}, {wristShake: true}];
+let userSetupData = JSON.parse(localStorage.getItem("exerciseSelection"));
+let exerciseSelection = userSetupData?.selection;
 
 if(exerciseSelection == null){
     showSetupPanel(true);
 } 
 else {
     showSetupPanel(false);
-    for(let i = 0; i < exerciseSelectionTest.length; i++){
-        if(Object.values(exerciseSelectionTest[i])[0] == false){
-            options.get(Object.keys(exerciseSelectionTest[i])[0]).style.display = "none";
+    for(let i = 0; i < exerciseSelection.length; i++){
+        if(Object.values(exerciseSelection[i])[0] == false){
+            options.get(Object.keys(exerciseSelection[i])[0]).style.display = "none";
             optionsCount--;
         }
     }
 }
 
-nextButton.addEventListener("click", () => {
+nextBtn.addEventListener("click", () => {
     if(nextCounter < optionsCount) nextCounter++;
     if(nextCounter > 0 && !headingChanged) changeHeading(); 
 
     contentContainer.scrollTo(nextCounter * contentContainer.clientWidth, 0);
     if(nextCounter == optionsCount) {
-        nextButton.style.display = "none";
+        nextBtn.style.display = "none";
         closeBtn.innerText = "close";
     }
 });
+
+cancelBtn.addEventListener("click", () => {
+    closeWindow();
+})
+
+settingsBtn.addEventListener("click", () => console.log("TODO: settings to be implemented"));
+pauseBtn.addEventListener("click", () => showPauseExtensionPanel(true));
+minimizePausePanelBtn.addEventListener("click", () => showPauseExtensionPanel(false));
+setPauseExtBtn.addEventListener("click", () => pauseExtension());
 
 document.getElementById("lookDistanceTimerBtn").addEventListener("click", function(){
     setTimeout(() => {
@@ -105,6 +120,7 @@ function pauseExtension(){
             break;
         default: console.log("whole day");
     }
+    //TODO: implement pause of the timer that causes the popup to open 
     closeWindow();
 }
 
@@ -132,9 +148,7 @@ function showPauseExtensionPanel(show){
 function closeWindow(){
     nextCounter = 0;
     headingChanged = false;
-    window.close();
-    //TODO: check which API call to use to close the popup again 
-    //maybe the following? : chrome.tabs.update({ active: true }); 
+    window.close(); 
 }
 
 //TODO: check if really needed. Maybe it's loading a whole new instance on opening the extension again
@@ -142,3 +156,5 @@ window.addEventListener("close", () => {
     nextCounter = 0;
     headingChanged = false;
 });
+
+chrome.alarms.create("drink", {delayInMinutes: 1, periodInMinutes: 1});

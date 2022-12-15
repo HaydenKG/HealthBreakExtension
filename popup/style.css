@@ -13,6 +13,13 @@ body {
     margin: 0;
     text-align: center;
     position: relative;
+    animation: smoothFadeIn .5s linear;
+    font-size: 100%;
+}
+
+@keyframes smoothFadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
 
 main {
@@ -21,6 +28,8 @@ main {
     align-items: center;
     justify-items: center;
     position: relative;
+    height: 100%;
+    padding: 0 3px;
 }
 
 span {
@@ -58,7 +67,7 @@ input {
     background-color: var(--secondColor);
     transform: translateY(-86px);
     position: absolute;
-    right: 0;
+    right: 5px;
     top: 0;
     display: grid;
     padding: 10px 0;
@@ -74,7 +83,7 @@ input {
     rotate: -45deg;
     color: #fff;
     position: absolute;
-    bottom: -7px;
+    bottom: -6px;
     left: 35%;
     display: block;
 }
@@ -103,7 +112,7 @@ input {
     scroll-behavior: smooth;
 }
 
-.exercisePanel {
+.contentPanel {
     flex: 0 0 300px;
     width: 300px;
     display: flex;
@@ -113,7 +122,7 @@ input {
     scroll-snap-align: center;
 }
 
-.exercisePanel > p {
+.contentPanel > p {
     padding: 0 2px;
 }
 

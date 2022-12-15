@@ -1,14 +1,22 @@
 {
-    "manifest_version": 3,
-    "name": "ProjectHealthBreak",
-    "description": "An extension to keep you fit during desk work",
-    "version": "1",
-    "action": {
-      "default_title": "Click to view health exercises",
-      "default_popup": "./popup/base.html",
-      "default_icon": "./images/icon-128.png"
-    },  
-    "icons": {
-      "128": "images/icon-128.png"
-    }
+  "name": "ProjectHealthBreak",
+  "description": "An extension to keep you fit during desk work",
+  "version": "1",
+  "manifest_version": 3,
+  "permissions": [
+    "alarms",
+    "notifications",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "./popup/background.js"
+  },
+  "action": {
+    "default_title": "Click to view health exercises",
+    "default_popup": "./popup/popup.html",
+    "default_icon": "./images/icon-128.png"
+  },
+  "icons": {
+    "128": "images/icon-128.png"
   }
+}

@@ -12,40 +12,39 @@
   <main>
     <h3 id="heading">👋 Need a break?</h3>
     <div id="hiddenSettingsPanel">
-      <img class="settingsBtn" title="Settings" onclick="console.log('TODO: Show settings page')"
+      <img class="settingsBtn" id="settingsIcon" title="Settings"
         src="../images/settingsIcon.png" \>
-      <img class="settingsBtn" title="Pause extension" onclick="showPauseExtensionPanel(true)"
+      <img class="settingsBtn" id="pauseExtensionIcon" title="Pause extension"
         src="../images/pauseIcon.png" \>
       <span id="arrowDown">&#9495;</span>
     </div>
     <div class="slidingContainer">
-      <div class="exercisePanel" id="eyeClose">
+      <div class="contentPanel" id="eyeClose">
         <p>Close your eyes for the duration of a deep breath</p>
       </div>
-      <div class="exercisePanel" id="eyeDistance">
+      <div class="contentPanel" id="eyeDistance">
         <p>Look into the distance for 20 seconds and follow an object with your eyes if you can</p>
         <button class="primary_btn" id="lookDistanceTimerBtn">Start</button>
       </div>
-      <div class="exercisePanel" id="breathingCycle">
+      <div class="contentPanel" id="breathingCycle">
         <p>Up for a 1:2 (inhale:exhale) breathing cycle?</p>
         <div class="breathingIndicatorBar"></div>
         <button class="primary_btn" id="breathingCycleBtn">Start</button>
       </div>
-      <div class="exercisePanel" id="wristShake">
+      <div class="contentPanel" id="wristShake">
         <p>Shake your wrists for a few seconds</p>
       </div>
-      <div class="exercisePanel">
+      <div class="contentPanel">
         <p>Thank you for taking time for your health</p>
       </div>
     </div>
     <div id="buttonContainer">
-      <button class="secondary_btn" onclick="closeWindow()" id="cancelBtn">I'm good for now</button>
+      <button class="secondary_btn" id="cancelBtn">I'm good for now</button>
       <button class="primary_btn" id="nextBtn">Next</button>
     </div>
   </main>
   <div id="pauseExtensionPanel" class="hiddenPanel">
-    <button class="secondary_btn" onclick="showPauseExtensionPanel(false)"
-      id="minimizePauseExtensionPanelBtn">_</button>
+    <button class="secondary_btn" id="minimizePauseExtensionPanelBtn">_</button>
     <h3>Pause <span>Health</span> break</h3>
     For
     <form id="pauseExtensionForm">
@@ -56,18 +55,18 @@
       <label>whole day</label>
       <input type="radio" name="pauseExtension" value="wholeDay">
     </form>
-    <button class="secondary_btn" onclick="pauseExtension()">set</button>
+    <button class="secondary_btn" id="setPauseExtBtn">set</button>
   </div>
   <div id="setupPanel" class="hiddenPanel showPanel">
     <h3>Welcome to the setup of <br><span>Health</span> break</h3>
     <div class="slidingContainer">
-      <div class="exercisePanel">
+      <div class="contentPanel">
         <p>Do you want to customize the extension?</p>
-        <button class="secondary_btn" onclick="nextSetupPanel()">Customize</button>
-        <button class="secondary_btn" onclick="defaultSetup()">Default</button>
+        <button class="secondary_btn" id="customizeSetupBtn">Customize</button>
+        <button class="secondary_btn" id="defaultSetupBtn">Default</button>
         <p>You can always change things in the settings afterwards</p>
       </div>
-      <div class="exercisePanel">
+      <div class="contentPanel">
         <p>Which health exercises do you want to do?</p>
         <form id="exerciseSelection">
           <label>Eye calming</label>
@@ -80,7 +79,7 @@
           <input type="checkbox" name="breathingCycle" checked>
         </form>
       </div>
-      <div class="exercisePanel">
+      <div class="contentPanel">
         <p>What is the intervall you want to be reminded by?</p>
         <form id="intervalSetup">
           <label>60 min</label>
@@ -91,7 +90,7 @@
           <input type="radio" name="interval" value="wholeDay">
         </form>
       </div>
-      <div class="exercisePanel">
+      <div class="contentPanel">
         <p>Which way of notification do you prefer?</p>
         <form id="notificationSetup">
           <label>Popup</label>
@@ -101,10 +100,10 @@
         </form>
       </div>
     </div>
-    <button id="setupNextButton" class="primary_btn" style="display: none;" onclick="nextSetupPanel()">Next</button>
+    <button id="setupNextButton" class="primary_btn" style="display: none;">Next</button>
   </div>
   <script src="setupHelper.js"></script>
-  <script src="logic.js"></script>
+  <script src="popup.js"></script>
   <!-- because inline js is not allowed-->
 </body>
 

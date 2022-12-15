@@ -11,8 +11,16 @@ let setupCounter = setupContainer.childElementCount;
 let nextSetupCounter = 0;
 let setupDataInstance = new setupData();
 
+const customizeSetupBtn = document.getElementById("customizeSetupBtn");
+const defaultSetupBtn = document.getElementById("defaultSetupBtn");
+const setupNextButton = document.getElementById("setupNextButton");
+
+customizeSetupBtn.addEventListener("click", () => nextSetupPanel());
+setupNextButton.addEventListener("click", () => nextSetupPanel());
+defaultSetupBtn.addEventListener("click", () => defaultSetup());
+
 function defaultSetup(){
-    //TODO: implement saving of the default settings
+    saveSetup();
     console.debug("Default setup selected")
     showSetupPanel(false);
 }
@@ -24,13 +32,7 @@ function nextSetupPanel(){
         document.getElementById("setupNextButton").innerText = "Done";
     }
     if(nextSetupCounter == setupCounter){
-        const selectionForm = document.getElementById("exerciseSelection")
-        const formData = new FormData(selectionForm);
-        setupDataInstance.selection = Array.from(formData);
-        setupDataInstance.notificationInterval = new FormData(document.getElementById("intervalSetup")).get("interval");
-        setupDataInstance.notificationType = new FormData(document.getElementById("notificationSetup")).get("notification");
-        console.log(JSON.stringify(setupDataInstance));
-        //TODO: Save stringified version and read it out in other script
+        saveSetup();
         showSetupPanel(false);
     }
     if(nextSetupCounter < setupCounter) 
@@ -42,4 +44,24 @@ function showSetupPanel(show){
         setupExtensionPanel.classList.add("showPanel");
     else 
         setupExtensionPanel.classList.remove("showPanel");
+}
+
+function saveSetup(){
+    const selectionFormData = document.getElementById("exerciseSelection");
+    setupDataInstance.selection = getSelection(selectionFormData);
+    setupDataInstance.notificationInterval = new FormData(document.getElementById("intervalSetup")).get("interval");
+    setupDataInstance.notificationType = new FormData(document.getElementById("notificationSetup")).get("notification");
+    console.log(JSON.stringify(setupDataInstance));
+    localStorage.setItem("exerciseSelection", JSON.stringify(setupDataInstance));
+}
+
+function getSelection(dataSet){
+    const arrayOfdataSet = Array.from(dataSet);
+    let selectionArray = [];
+    for(let i = 0; i < arrayOfdataSet.length; i++){
+        let dataSet = {};
+        dataSet[arrayOfdataSet[i].name]= arrayOfdataSet[i].checked;
+        selectionArray.push(dataSet);
+    }
+    return selectionArray;
 }
